@@ -180,8 +180,14 @@ print(ts)
 
 # deteksi mhw
 res <- detect_event(ts)
+#res <- detect_event(ts, categories=TRUE)
 print(res)
 
+# cek kategori mhw
+cat_mhw <- category(res)
+head(cat_mhw)
+
+# plot
 #event_line(res, spread = 100, metric = "intensity_cumulative",
 #           start_date = "2010-12-01", end_date = "2011-06-30")
 
@@ -189,6 +195,7 @@ print(res)
 #           end_date = "2023-12-31", category = TRUE)
 
 event_line(res, spread=600, start_date = "2022-01-01", end_date = "2023-12-31", category = FALSE)
+
 
 
 #==============================================================================
