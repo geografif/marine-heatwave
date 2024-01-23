@@ -170,17 +170,25 @@ head(sst_grid2)
 colnames(sst_grid2) <- c("t", "temp") #ubah nama kolom
 head(sst_grid2)
 
-# deteksi
+# membuat climatology & threshold 99%
+#ts <- ts2clm(sst_grid2, x = t, y = temp, climatologyPeriod = c("1982-01-01", "2023-12-31"),
+#             windowHalfWidth=5, pctile=99, smoothPercentile=TRUE, smoothPercentileWidth=31)
+
+# dengan threshold default 90%
 ts <- ts2clm(sst_grid2, climatologyPeriod = c("1982-01-01", "2023-12-31"))
 print(ts)
 
+# deteksi mhw
 res <- detect_event(ts)
 print(res)
+
 #event_line(res, spread = 100, metric = "intensity_cumulative",
 #           start_date = "2010-12-01", end_date = "2011-06-30")
 
-event_line(res, spread = 300, start_date = "2022-01-01", #ganti angka spread untuk jumlah hari
-           end_date = "2023-12-31", category = TRUE)
+#event_line(res, spread = 300, start_date = "2022-01-01", #ganti angka spread untuk jumlah hari
+#           end_date = "2023-12-31", category = TRUE)
+
+event_line(res, spread=600, start_date = "2022-01-01", end_date = "2023-12-31", category = FALSE)
 
 
 #==============================================================================
