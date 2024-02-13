@@ -196,7 +196,27 @@ head(cat_mhw)
 
 event_line(res, spread=600, start_date = "2022-01-01", end_date = "2023-12-31", category = FALSE)
 
+#==============================================================================
+# Loop climatology dan percentile90 ke setiap grid
+#==============================================================================
+library(tidyr)
+head(sst_final)
+#nestdf <- sst_final %>% nest(Long:Lat)
 
+aa <- split(sst_final, with(sst_final, interaction(Long,Lat)), drop = TRUE)
+
+
+list_of_ts <- lapply(aa, function(df) {
+  ts2clm(df, x = Date, y = Temp_C, climatologyPeriod = c("1982-01-01", "2023-12-31"))
+})
+
+#ts <- ts2clm(sst_final, x=Date, y=Temp_C, climatologyPeriod = c("1982-01-01", "2023-12-31"))
+
+list_of_ts$`114.975.-8.025`
+
+#ab <- as.data.frame(list_of_ts)
+#xy <- Map(c, aa, list_of_ts)
+#xy$`114.975.-8.025`
 
 #==============================================================================
 # Deteksi marine heatwave dengan data grid (raster) dan package heatwave3
